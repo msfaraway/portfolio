@@ -341,6 +341,126 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* ─── PORTFOLIO ─── */
+    #portfolio { background: var(--ink); }
+    #portfolio h2 { color: var(--cream); }
+    #portfolio h2 span { color: var(--teal-lt); font-style: italic; }
+    #portfolio .section-label { color: var(--teal-lt); }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .port-card {
+      display: flex; flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    /* The screenshot window — fixed 9:16 aspect ratio */
+    .port-window {
+      position: relative;
+      width: 100%;
+      padding-bottom: 177.78%; /* 9:16 */
+      border-radius: 8px;
+      overflow: hidden;
+      background: #0d0d0d;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+      cursor: pointer;
+    }
+
+    .port-window::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 2;
+      background: linear-gradient(to bottom,
+        rgba(45,125,111,0) 60%,
+        rgba(45,125,111,.55) 100%);
+      opacity: 0;
+      transition: opacity .35s;
+    }
+    .port-card:hover .port-window::before { opacity: 1; }
+
+    /* Browser chrome bar */
+    .port-chrome {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 3;
+      height: 28px;
+      background: #1e1e1e;
+      display: flex; align-items: center; gap: 6px;
+      padding: 0 10px;
+    }
+    .chrome-dot {
+      width: 9px; height: 9px; border-radius: 50%;
+    }
+    .chrome-dot:nth-child(1) { background: #ff5f57; }
+    .chrome-dot:nth-child(2) { background: #ffbd2e; }
+    .chrome-dot:nth-child(3) { background: #28c840; }
+    .chrome-url {
+      margin-left: 8px;
+      font-family: 'DM Mono', monospace;
+      font-size: .6rem; color: rgba(255,255,255,.35);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      max-width: 80%;
+    }
+
+    /* The screenshot image that scrolls on hover */
+    .port-screenshot {
+      position: absolute;
+      top: 28px; left: 0; right: 0;
+      bottom: 0;
+      overflow: hidden;
+    }
+    .port-screenshot img {
+      width: 100%;
+      height: auto;
+      display: block;
+      /* Start at top of screenshot */
+      transform: translateY(0%);
+      /* On hover: shift to bottom — we'll animate via CSS var */
+      transition: transform 4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+    }
+    .port-card:hover .port-screenshot img {
+      transform: translateY(calc(-100% + (100vh - 28px) * .55));
+    }
+
+    /* Visit link overlay */
+    .port-visit {
+      position: absolute; bottom: 1rem; right: 1rem; z-index: 4;
+      background: var(--teal); color: #fff;
+      font-family: 'DM Mono', monospace;
+      font-size: .68rem; letter-spacing: .1em;
+      padding: .4rem .9rem; border-radius: 2px;
+      text-decoration: none;
+      opacity: 0; transform: translateY(6px);
+      transition: opacity .3s, transform .3s;
+    }
+    .port-card:hover .port-visit { opacity: 1; transform: translateY(0); }
+
+    .port-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; color: var(--cream);
+      margin-bottom: .35rem;
+    }
+    .port-info p {
+      font-size: .83rem; color: rgba(245,240,232,.5); line-height: 1.6;
+    }
+    .port-tech {
+      display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .6rem;
+    }
+    .port-tech span {
+      font-family: 'DM Mono', monospace;
+      font-size: .65rem; letter-spacing: .07em;
+      padding: .2rem .55rem;
+      border: 1px solid rgba(74,168,154,.3);
+      color: var(--teal-lt);
+      border-radius: 2px;
+    }
+
+    @media (max-width: 900px) {
+      .portfolio-grid { grid-template-columns: 1fr; }
+    }
+
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
       nav { padding: 1rem 1.5rem; }
@@ -363,6 +483,7 @@
     <li><a href="#services">Services</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
     <li><a href="#tools">Tools</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -390,8 +511,8 @@
         <div class="stat-label">Years Experience</div>
       </div>
       <div class="stat">
-        <div class="stat-num">300+</div>
-        <div class="stat-label">Projects Completed</div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Countries Worked</div>
       </div>
       <div class="stat">
         <div class="stat-num">Full</div>
@@ -636,13 +757,112 @@
   </div>
 </section>
 
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <p class="section-label">Featured Work</p>
+  <h2>Sites I've <span>Built</span></h2>
+  <div class="portfolio-grid">
+
+    <!-- PSI Roofing -->
+    <div class="port-card">
+      <div class="port-window">
+        <div class="port-chrome">
+          <div class="chrome-dot"></div>
+          <div class="chrome-dot"></div>
+          <div class="chrome-dot"></div>
+          <span class="chrome-url">psi-roofing.com</span>
+        </div>
+        <div class="port-screenshot">
+          <img
+            src="https://api.screenshotone.com/take?url=https://psi-roofing.com&viewport_width=1280&viewport_height=900&full_page=true&format=jpg&quality=85&cache=true"
+            alt="PSI Roofing website screenshot"
+            loading="lazy"
+          />
+        </div>
+        <a href="https://psi-roofing.com/" target="_blank" rel="noopener" class="port-visit">Visit Site ↗</a>
+      </div>
+      <div class="port-info">
+        <h3>PSI Roofing</h3>
+        <p>Commercial roofing company site with service pages, SEO optimization, and lead generation forms across South Florida markets.</p>
+        <div class="port-tech">
+          <span>WordPress</span>
+          <span>Custom Theme</span>
+          <span>SEO</span>
+          <span>Lead Gen</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Studio FV -->
+    <div class="port-card">
+      <div class="port-window">
+        <div class="port-chrome">
+          <div class="chrome-dot"></div>
+          <div class="chrome-dot"></div>
+          <div class="chrome-dot"></div>
+          <span class="chrome-url">studio-fv.com</span>
+        </div>
+        <div class="port-screenshot">
+          <img
+            src="https://api.screenshotone.com/take?url=https://studio-fv.com&viewport_width=1280&viewport_height=900&full_page=true&format=jpg&quality=85&cache=true"
+            alt="Studio FV website screenshot"
+            loading="lazy"
+          />
+        </div>
+        <a href="https://studio-fv.com/" target="_blank" rel="noopener" class="port-visit">Visit Site ↗</a>
+      </div>
+      <div class="port-info">
+        <h3>Studio FV</h3>
+        <p>Creative studio portfolio with a refined, design-forward aesthetic — showcasing brand work and visual identity projects.</p>
+        <div class="port-tech">
+          <span>WordPress</span>
+          <span>UI/UX Design</span>
+          <span>Responsive</span>
+          <span>Animation</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gulf Pacific Seafood -->
+    <div class="port-card">
+      <div class="port-window">
+        <div class="port-chrome">
+          <div class="chrome-dot"></div>
+          <div class="chrome-dot"></div>
+          <div class="chrome-dot"></div>
+          <span class="chrome-url">gulfpacificseafood.com</span>
+        </div>
+        <div class="port-screenshot">
+          <img
+            src="https://api.screenshotone.com/take?url=https://gulfpacificseafood.com&viewport_width=1280&viewport_height=900&full_page=true&format=jpg&quality=85&cache=true"
+            alt="Gulf Pacific Seafood website screenshot"
+            loading="lazy"
+          />
+        </div>
+        <a href="https://gulfpacificseafood.com/" target="_blank" rel="noopener" class="port-visit">Visit Site ↗</a>
+      </div>
+      <div class="port-info">
+        <h3>Gulf Pacific Seafood</h3>
+        <p>Seafood distributor site with product catalog, company story, and contact integration — optimized for B2B inquiries.</p>
+        <div class="port-tech">
+          <span>WordPress</span>
+          <span>WooCommerce</span>
+          <span>API Integration</span>
+          <span>Performance</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- TOOLS -->
 <section id="tools">
   <p class="section-label">Tech Stack</p>
   <h2>Tools I <span>Work With</span></h2>
   <div class="tools-grid">
     <div class="tool-card"><span class="tool-icon">🔵</span><span class="tool-name">WordPress</span></div>
-    <div class="tool-card"><span class="tool-icon">📲</span><span class="tool-name">Social Media Management</span></div>
+    <div class="tool-card"><span class="tool-icon">📱</span><span class="tool-name">Social Media Management</span></div>
     <div class="tool-card"><span class="tool-icon">🟠</span><span class="tool-name">n8n</span></div>
     <div class="tool-card"><span class="tool-icon">⚡</span><span class="tool-name">Zapier</span></div>
     <div class="tool-card"><span class="tool-icon">🔗</span><span class="tool-name">Make / Integromat</span></div>
@@ -686,6 +906,7 @@
   </div>
   <div class="contact-links">
     <a href="https://linkedin.com/in/msfaraway" target="_blank" class="btn btn-outline" style="border-color:rgba(255,255,255,.4);color:#fff;">LinkedIn ↗</a>
+    <a href="https://yoursite.com" target="_blank" class="btn btn-outline" style="border-color:rgba(255,255,255,.4);color:#fff;">Personal Website ↗</a>
     <a href="mailto:farhanarayhanandar@yahoo.com" class="btn btn-primary" style="background:var(--teal-lt);border-color:var(--teal-lt);">Send Email</a>
   </div>
 </section>
