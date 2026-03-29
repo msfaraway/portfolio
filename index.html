@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Farhana Rayhan Andar — WordPress Developer & Creative Technologist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal:     #2D7D6F;
+      --teal-lt:  #4AA89A;
+      --teal-dim: #1B4F47;
+      --cream:    #F5F0E8;
+      --warm:     #EDE7D9;
+      --ink:      #1A1A18;
+      --mid:      #5C5C56;
+      --border:   rgba(45,125,111,.18);
+      --card:     rgba(255,255,255,.72);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(245,240,232,.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; letter-spacing: .04em;
+      color: var(--teal-dim);
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: .82rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--mid); text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 5rem 5rem 8rem;
+      position: relative; z-index: 2;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: .75rem; letter-spacing: .2em; color: var(--teal);
+      text-transform: uppercase; margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp .6s .2s forwards;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.4rem);
+      line-height: 1.1; font-weight: 700;
+      margin-bottom: 1.8rem;
+      opacity: 0; animation: fadeUp .6s .35s forwards;
+    }
+    h1 em { font-style: italic; color: var(--teal); }
+    .hero-desc {
+      font-size: 1rem; line-height: 1.75; color: var(--mid);
+      max-width: 440px; margin-bottom: 2.5rem;
+      opacity: 0; animation: fadeUp .6s .5s forwards;
+    }
+    .hero-cta {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp .6s .65s forwards;
+    }
+    .btn {
+      display: inline-block; padding: .75rem 1.8rem;
+      border-radius: 2px; font-size: .85rem;
+      letter-spacing: .08em; font-weight: 500;
+      text-decoration: none; cursor: pointer;
+      transition: all .22s;
+    }
+    .btn-primary {
+      background: var(--teal); color: #fff;
+      border: 2px solid var(--teal);
+    }
+    .btn-primary:hover { background: var(--teal-dim); border-color: var(--teal-dim); }
+    .btn-outline {
+      background: transparent; color: var(--teal);
+      border: 2px solid var(--teal);
+    }
+    .btn-outline:hover { background: var(--teal); color: #fff; }
+
+    .hero-right {
+      position: relative; overflow: hidden;
+    }
+    .hero-bg-shape {
+      position: absolute; top: -10%; right: -10%;
+      width: 110%; height: 110%;
+      background: linear-gradient(135deg, var(--teal-dim) 0%, var(--teal) 60%, var(--teal-lt) 100%);
+      clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+    .hero-grid-overlay {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .hero-stats {
+      position: absolute; bottom: 3rem; left: 2rem; right: 2rem;
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 1px;
+      background: rgba(255,255,255,.12);
+      border-radius: 4px; overflow: hidden;
+      opacity: 0; animation: fadeUp .6s .8s forwards;
+    }
+    .stat {
+      padding: 1.4rem 1rem;
+      background: rgba(0,0,0,.18);
+      backdrop-filter: blur(8px);
+      text-align: center; color: #fff;
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: .72rem; letter-spacing: .1em;
+      text-transform: uppercase; opacity: .75;
+      margin-top: .35rem;
+    }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 6rem 8rem; }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .72rem; letter-spacing: .2em; color: var(--teal);
+      text-transform: uppercase; margin-bottom: .8rem;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      line-height: 1.15; margin-bottom: 3rem;
+    }
+    h2 span { color: var(--teal); font-style: italic; }
+
+    /* ─── SERVICES ─── */
+    #services { background: var(--warm); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .service-card {
+      background: var(--cream);
+      padding: 2.2rem;
+      transition: background .2s;
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--teal);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .3s;
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:hover { background: #fff; }
+    .service-icon {
+      font-size: 1.8rem; margin-bottom: 1rem;
+    }
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; margin-bottom: .75rem;
+    }
+    .service-card p {
+      font-size: .88rem; line-height: 1.7; color: var(--mid);
+    }
+    .service-tags {
+      display: flex; flex-wrap: wrap; gap: .4rem;
+      margin-top: 1.2rem;
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: .68rem; letter-spacing: .08em;
+      padding: .25rem .6rem;
+      background: rgba(45,125,111,.1);
+      color: var(--teal-dim);
+      border-radius: 2px;
+    }
+
+    /* ─── SKILLS ─── */
+    #skills { background: var(--ink); color: var(--cream); }
+    #skills h2 { color: var(--cream); }
+    #skills h2 span { color: var(--teal-lt); }
+    .skills-layout {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem; align-items: start;
+    }
+    .skills-intro { font-size: .95rem; line-height: 1.8; color: rgba(245,240,232,.65); }
+    .skills-groups { display: flex; flex-direction: column; gap: 2rem; }
+    .skill-group-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .7rem; letter-spacing: .15em;
+      color: var(--teal-lt); text-transform: uppercase;
+      margin-bottom: .75rem;
+    }
+    .skill-pills {
+      display: flex; flex-wrap: wrap; gap: .5rem;
+    }
+    .skill-pill {
+      font-size: .82rem; padding: .4rem 1rem;
+      border: 1px solid rgba(74,168,154,.3);
+      color: rgba(245,240,232,.8);
+      border-radius: 40px;
+      transition: all .2s;
+    }
+    .skill-pill:hover {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: #fff;
+    }
+
+    /* ─── EXPERIENCE ─── */
+    #experience { background: var(--cream); }
+    .timeline { position: relative; padding-left: 2.5rem; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 8px; bottom: 8px;
+      width: 1px; background: var(--border);
+    }
+    .timeline-item { position: relative; margin-bottom: 3rem; }
+    .timeline-dot {
+      position: absolute; left: -2.65rem; top: 8px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--teal); border: 2px solid var(--cream);
+      box-shadow: 0 0 0 3px rgba(45,125,111,.2);
+    }
+    .timeline-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: .72rem; color: var(--teal);
+      letter-spacing: .1em; margin-bottom: .5rem;
+    }
+    .timeline-item h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; margin-bottom: .3rem;
+    }
+    .timeline-company {
+      font-size: .85rem; color: var(--mid); margin-bottom: 1rem;
+    }
+    .timeline-bullets {
+      list-style: none; display: flex; flex-direction: column; gap: .5rem;
+    }
+    .timeline-bullets li {
+      font-size: .88rem; line-height: 1.65; color: var(--mid);
+      padding-left: 1.2rem; position: relative;
+    }
+    .timeline-bullets li::before {
+      content: '→';
+      position: absolute; left: 0;
+      color: var(--teal); font-size: .75rem;
+    }
+
+    /* ─── TOOLS ─── */
+    #tools { background: var(--warm); }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+    .tool-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      padding: 1.4rem 1.2rem;
+      border-radius: 4px;
+      display: flex; align-items: center; gap: .9rem;
+      transition: all .22s;
+    }
+    .tool-card:hover {
+      border-color: var(--teal);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(45,125,111,.12);
+    }
+    .tool-icon { font-size: 1.5rem; }
+    .tool-name { font-size: .85rem; font-weight: 500; }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--teal-dim); color: #fff;
+      text-align: center;
+    }
+    #contact h2 { color: #fff; margin-bottom: 1rem; }
+    #contact h2 span { color: var(--teal-lt); }
+    #contact .sub { color: rgba(255,255,255,.65); font-size: .95rem; margin-bottom: 2.5rem; }
+    .contact-info {
+      display: flex; justify-content: center; gap: 3rem;
+      flex-wrap: wrap; margin-bottom: 2.5rem;
+    }
+    .contact-item {
+      display: flex; flex-direction: column; align-items: center; gap: .4rem;
+    }
+    .contact-item-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .68rem; letter-spacing: .15em;
+      text-transform: uppercase; color: rgba(255,255,255,.5);
+    }
+    .contact-item-value {
+      font-size: .95rem; color: #fff;
+    }
+    .contact-links { display: flex; gap: 1rem; justify-content: center; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--ink); color: rgba(245,240,232,.4);
+      text-align: center; padding: 2rem;
+      font-size: .78rem; letter-spacing: .05em;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 7rem 2rem 3rem; }
+      .hero-right { height: 220px; }
+      .hero-stats { grid-template-columns: repeat(3,1fr); bottom: 1rem; left: 1rem; right: 1rem; }
+      section { padding: 4rem 2rem; }
+      .skills-layout { grid-template-columns: 1fr; gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Farhana R. Andar</div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <p class="hero-eyebrow">WordPress Developer · Designer · Automation Specialist</p>
+    <h1>Building <em>digital experiences</em> that actually work.</h1>
+    <p class="hero-desc">
+      8+ years crafting high-performance WordPress sites, brand identities, and automated workflows — from pixel-perfect front-ends to seamless back-end integrations.
+    </p>
+    <div class="hero-cta">
+      <a href="#services" class="btn btn-primary">View My Services</a>
+      <a href="#contact" class="btn btn-outline">Let's Work Together</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-bg-shape"></div>
+    <div class="hero-grid-overlay"></div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">8+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">300+</div>
+        <div class="stat-label">Projects Completed</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">Full</div>
+        <div class="stat-label">Stack WordPress</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="section-label">What I Do</p>
+  <h2>Services I <span>Offer</span></h2>
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-icon">🎨</div>
+      <h3>WordPress Development</h3>
+      <p>Custom theme development, plugin integration, performance tuning, and full-site migrations — both front-end and back-end, built to scale.</p>
+      <div class="service-tags">
+        <span class="tag">Custom Themes</span>
+        <span class="tag">Plugin Dev</span>
+        <span class="tag">PHP</span>
+        <span class="tag">WooCommerce</span>
+        <span class="tag">Elementor</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">⚙️</div>
+      <h3>Workflow Automation</h3>
+      <p>End-to-end automation pipelines connecting your apps, CRMs, and WordPress site using REST APIs, n8n, Zapier, and Make (Integromat).</p>
+      <div class="service-tags">
+        <span class="tag">n8n</span>
+        <span class="tag">Zapier</span>
+        <span class="tag">Make</span>
+        <span class="tag">REST APIs</span>
+        <span class="tag">Webhooks</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🖌️</div>
+      <h3>Graphic Design</h3>
+      <p>Logo design, brand identities, marketing collateral, and social media assets that make your brand impossible to ignore.</p>
+      <div class="service-tags">
+        <span class="tag">Adobe Suite</span>
+        <span class="tag">Canva</span>
+        <span class="tag">Brand Identity</span>
+        <span class="tag">Print & Digital</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🎬</div>
+      <h3>Video Editing</h3>
+      <p>Professional video editing for reels, ads, tutorials, and brand content — optimized for social platforms and web.</p>
+      <div class="service-tags">
+        <span class="tag">Premiere Pro</span>
+        <span class="tag">CapCut</span>
+        <span class="tag">Reels & Shorts</span>
+        <span class="tag">Brand Videos</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🔌</div>
+      <h3>API Integration</h3>
+      <p>Connect third-party platforms, payment gateways, CRMs, analytics tools, and custom services directly into your WordPress site.</p>
+      <div class="service-tags">
+        <span class="tag">REST API</span>
+        <span class="tag">JSON/XML</span>
+        <span class="tag">OAuth</span>
+        <span class="tag">Webhooks</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">📈</div>
+      <h3>SEO & Performance</h3>
+      <p>Technical SEO audits, on-page optimization, Core Web Vitals improvements, and speed enhancements to drive real organic growth.</p>
+      <div class="service-tags">
+        <span class="tag">On-Page SEO</span>
+        <span class="tag">Core Web Vitals</span>
+        <span class="tag">Speed Optimization</span>
+        <span class="tag">Analytics</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🛒</div>
+      <h3>E-commerce Solutions</h3>
+      <p>WooCommerce stores, product catalog setup, payment gateway integration, inventory management, and checkout optimization.</p>
+      <div class="service-tags">
+        <span class="tag">WooCommerce</span>
+        <span class="tag">Payment Gateways</span>
+        <span class="tag">Inventory</span>
+        <span class="tag">Checkout UX</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <h3>Digital Marketing</h3>
+      <p>Social media strategy, content creation, campaign management, and performance reporting to grow your audience and convert leads.</p>
+      <div class="service-tags">
+        <span class="tag">Social Strategy</span>
+        <span class="tag">Content Creation</span>
+        <span class="tag">Analytics</span>
+        <span class="tag">Lead Gen</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">Capabilities</p>
+  <h2>Skills &amp; <span>Expertise</span></h2>
+  <div class="skills-layout">
+    <div>
+      <p class="skills-intro">
+        A rare blend of technical depth and creative range — I bridge the gap between beautiful design and robust, automated systems. Every project gets both sides of the brain.
+      </p>
+    </div>
+    <div class="skills-groups">
+
+      <div>
+        <p class="skill-group-label">WordPress & Web</p>
+        <div class="skill-pills">
+          <span class="skill-pill">WordPress (Front + Back End)</span>
+          <span class="skill-pill">PHP</span>
+          <span class="skill-pill">HTML5</span>
+          <span class="skill-pill">CSS3</span>
+          <span class="skill-pill">JavaScript</span>
+          <span class="skill-pill">Elementor</span>
+          <span class="skill-pill">Divi</span>
+          <span class="skill-pill">WooCommerce</span>
+          <span class="skill-pill">Custom Post Types</span>
+          <span class="skill-pill">ACF</span>
+          <span class="skill-pill">Theme Development</span>
+          <span class="skill-pill">Plugin Development</span>
+        </div>
+      </div>
+
+      <div>
+        <p class="skill-group-label">Automation & APIs</p>
+        <div class="skill-pills">
+          <span class="skill-pill">n8n</span>
+          <span class="skill-pill">Zapier</span>
+          <span class="skill-pill">Make (Integromat)</span>
+          <span class="skill-pill">REST API</span>
+          <span class="skill-pill">Webhooks</span>
+          <span class="skill-pill">API Integration</span>
+          <span class="skill-pill">JSON / XML</span>
+          <span class="skill-pill">OAuth 2.0</span>
+          <span class="skill-pill">CRM Automation</span>
+        </div>
+      </div>
+
+      <div>
+        <p class="skill-group-label">Design & Creative</p>
+        <div class="skill-pills">
+          <span class="skill-pill">Adobe Illustrator</span>
+          <span class="skill-pill">Adobe Photoshop</span>
+          <span class="skill-pill">Premiere Pro</span>
+          <span class="skill-pill">Canva</span>
+          <span class="skill-pill">CapCut</span>
+          <span class="skill-pill">Brand Identity</span>
+          <span class="skill-pill">UI/UX Design</span>
+          <span class="skill-pill">Logo Design</span>
+          <span class="skill-pill">Video Editing</span>
+        </div>
+      </div>
+
+      <div>
+        <p class="skill-group-label">Strategy & Marketing</p>
+        <div class="skill-pills">
+          <span class="skill-pill">SEO</span>
+          <span class="skill-pill">Google Analytics</span>
+          <span class="skill-pill">Social Media Strategy</span>
+          <span class="skill-pill">Content Marketing</span>
+          <span class="skill-pill">Email Campaigns</span>
+          <span class="skill-pill">Project Management</span>
+          <span class="skill-pill">Client Training</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label">Career</p>
+  <h2>Work <span>History</span></h2>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-meta">Sep 2021 – Oct 2025 · Florida City, FL</p>
+      <h3>WordPress Developer</h3>
+      <p class="timeline-company">OMG National</p>
+      <ul class="timeline-bullets">
+        <li>Built fully responsive custom page templates optimised for non-technical content editors.</li>
+        <li>Integrated third-party APIs, dynamic forms, and backend services into scalable WordPress environments.</li>
+        <li>Led on-page SEO across metadata, heading structures, schema markup, and image optimisation.</li>
+        <li>Delivered cross-device UX strategies ensuring consistency from desktop to mobile.</li>
+        <li>Ran client training sessions empowering teams to self-manage their WordPress dashboards.</li>
+        <li>Performed regular performance audits and technical upgrades to maintain peak site speed.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-meta">Mar 2018 – Mar 2021 · Manila, Philippines</p>
+      <h3>Senior Web Developer</h3>
+      <p class="timeline-company">WP Tangerine</p>
+      <ul class="timeline-bullets">
+        <li>Migrated websites between hosting providers with zero downtime or data loss.</li>
+        <li>Customised themes to client specification following WordPress coding standards.</li>
+        <li>Integrated payment gateways, analytics tools, and third-party APIs into existing sites.</li>
+        <li>Monitored uptime, page load speed, and server resource usage for optimal performance.</li>
+        <li>Resolved cross-browser compatibility issues across all major browsers.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-meta">Jan 2016 – Mar 2018 · Remote</p>
+      <h3>Freelance WordPress Developer & Graphic Designer</h3>
+      <p class="timeline-company">Various Clients</p>
+      <ul class="timeline-bullets">
+        <li>Designed logos, brand identities, and marketing materials for diverse industries.</li>
+        <li>Developed and styled web pages using HTML and CSS from scratch.</li>
+        <li>Managed social media accounts and produced engaging content across platforms.</li>
+        <li>Delivered campaign performance reports and weekly progress updates to clients.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools">
+  <p class="section-label">Tech Stack</p>
+  <h2>Tools I <span>Work With</span></h2>
+  <div class="tools-grid">
+    <div class="tool-card"><span class="tool-icon">🔵</span><span class="tool-name">WordPress</span></div>
+    <div class="tool-card"><span class="tool-icon">🟠</span><span class="tool-name">n8n</span></div>
+    <div class="tool-card"><span class="tool-icon">⚡</span><span class="tool-name">Zapier</span></div>
+    <div class="tool-card"><span class="tool-icon">🔗</span><span class="tool-name">Make / Integromat</span></div>
+    <div class="tool-card"><span class="tool-icon">🛍️</span><span class="tool-name">WooCommerce</span></div>
+    <div class="tool-card"><span class="tool-icon">🔷</span><span class="tool-name">Elementor</span></div>
+    <div class="tool-card"><span class="tool-icon">🎨</span><span class="tool-name">Adobe Illustrator</span></div>
+    <div class="tool-card"><span class="tool-icon">🖼️</span><span class="tool-name">Adobe Photoshop</span></div>
+    <div class="tool-card"><span class="tool-icon">🎬</span><span class="tool-name">Premiere Pro</span></div>
+    <div class="tool-card"><span class="tool-icon">✂️</span><span class="tool-name">CapCut</span></div>
+    <div class="tool-card"><span class="tool-icon">🖌️</span><span class="tool-name">Canva</span></div>
+    <div class="tool-card"><span class="tool-icon">📊</span><span class="tool-name">Google Analytics</span></div>
+    <div class="tool-card"><span class="tool-icon">💾</span><span class="tool-name">MySQL / Database</span></div>
+    <div class="tool-card"><span class="tool-icon">🔧</span><span class="tool-name">REST APIs</span></div>
+    <div class="tool-card"><span class="tool-icon">📦</span><span class="tool-name">Git / Version Control</span></div>
+    <div class="tool-card"><span class="tool-icon">☁️</span><span class="tool-name">cPanel / Hosting</span></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label" style="color:rgba(255,255,255,.5);">Get In Touch</p>
+  <h2>Let's Build <span>Something Great</span></h2>
+  <p class="sub">Open to freelance projects, full-time opportunities, and long-term partnerships.</p>
+  <div class="contact-info">
+    <div class="contact-item">
+      <span class="contact-item-label">Email</span>
+      <a href="mailto:farhanarayhanandar@yahoo.com" class="contact-item-value" style="color:#fff;text-decoration:none;">farhanarayhanandar@yahoo.com</a>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Phone</span>
+      <span class="contact-item-value">(513) 304-1389</span>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Location</span>
+      <span class="contact-item-value">Cincinnati, OH, US</span>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Languages</span>
+      <span class="contact-item-value">English · Tagalog</span>
+    </div>
+  </div>
+  <div class="contact-links">
+    <a href="https://linkedin.com" target="_blank" class="btn btn-outline" style="border-color:rgba(255,255,255,.4);color:#fff;">LinkedIn ↗</a>
+    <a href="https://yoursite.com" target="_blank" class="btn btn-outline" style="border-color:rgba(255,255,255,.4);color:#fff;">Personal Website ↗</a>
+    <a href="mailto:farhanarayhanandar@yahoo.com" class="btn btn-primary" style="background:var(--teal-lt);border-color:var(--teal-lt);">Send Email</a>
+  </div>
+</section>
+
+<footer>
+  © 2025 Farhana Rayhan Andar — WordPress Developer · Designer · Automation Specialist
+</footer>
+
+</body>
+</html>
